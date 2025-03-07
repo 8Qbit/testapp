@@ -17,3 +17,4 @@ jobs:
           workflow-repo: 'Infra-v2'
           workflow-yaml: 'receive_tag_update.yml'
           workflow-branch: 'infra-v2-dev'
+          workflow-inputs: '{\"tag_name\": \"${{ github.ref_name }}\"}'
