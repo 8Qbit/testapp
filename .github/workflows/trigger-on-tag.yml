@@ -1,18 +1,19 @@
 name: Handle Tag Creation
 
 on:
-    push:
-      tags:
-        - '*'
+  push:
+    tags:
+      - '*'
   
 jobs:
-    notify-other-repo:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Trigger workflow in other repository
-          uses: peter-evans/repository-dispatch@v2
-          with:
-            token: ${{ secrets.PAT_TOKEN }}
-            repository: Riskidev/Infra-v2
-            event-type: tag_created
-            client-payload: '{"tag": "${{ github.ref_name }}"}'
+  trigger-remote-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Remote Workflow
+        uses: anecdotes-ai/remote-workflow-control@latest
+        with:
+          github-auth-token: ${{ secrets.PAT_TOKEN }}
+          workflow-org: 'Riskidev'
+          workflow-repo: 'Infra-v2'
+          workflow-yaml: 'trigger-on-tag.yml'
+          workflow-branch: 'infra-v2-dev'
