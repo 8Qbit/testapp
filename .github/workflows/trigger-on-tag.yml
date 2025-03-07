@@ -1,0 +1,18 @@
+name: Handle Tag Creation
+
+on:
+    push:
+      tags:
+        - '*'
+  
+jobs:
+    notify-other-repo:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Trigger workflow in other repository
+          uses: peter-evans/repository-dispatch@v2
+          with:
+            token: ${{ secrets.PAT_TOKEN }}
+            repository: Riskidev/Infra-v2
+            event-type: tag_created
+            client-payload: '{"tag": "${{ github.ref_name }}"}'
