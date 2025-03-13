@@ -1,23 +1,4 @@
-name: Handle Tag Creation
 
-on:
-  release:
-    types: [published]
-
-jobs:
-  trigger-pre-release-workflow:
-    runs-on: ubuntu-latest
-    if: github.event.release.prerelease == true
-    steps:
-      - name: Trigger Pre-release Workflow
-        run: echo "Trigger Pre-release Workflow"
-
-  trigger-release-workflow:
-    runs-on: ubuntu-latest
-    if: github.event.release.prerelease == false
-    steps:
-      - name: Trigger Release Workflow
-        run: echo "Trigger Release Workflow"
 #jobs:
 #  trigger-pre-release-workflow:
 #    runs-on: ubuntu-latest
