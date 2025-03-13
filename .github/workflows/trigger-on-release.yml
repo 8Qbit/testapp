@@ -1,8 +1,8 @@
 name: Trigger on Release
 
 on:
-  release
-
+  release:
+    types: [released,edited]
 jobs:
   trigger-release-workflow:
     runs-on: ubuntu-latest

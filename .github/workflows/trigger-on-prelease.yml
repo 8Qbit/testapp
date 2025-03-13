@@ -1,8 +1,8 @@
 name: Trigger on Pre-release
 
 on:
-  release
-
+  release:
+    types: [prereleased,edited]
 jobs:
   trigger-pre-release-workflow:
     runs-on: ubuntu-latest
