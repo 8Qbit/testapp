@@ -1,8 +1,7 @@
 name: Trigger on Pre-release
 
 on:
-  release:
-    types: [published, edited]
+  release
 
 jobs:
   trigger-pre-release-workflow:
