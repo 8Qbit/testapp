@@ -2,7 +2,7 @@ name: Trigger on Release
 
 on:
   release:
-    types: [edited]
+    types: [released]
 
 jobs:
   trigger-release-workflow:
