@@ -6,7 +6,21 @@ on:
 jobs:
   trigger-release-workflow:
     runs-on: ubuntu-latest
-    if: github.event.release.prerelease == false
     steps:
+      - name: Debug Release Event
+        run: |
+          echo "Release Event Values:"
+          echo "action: ${{ github.event.action }}"
+          echo "release.tag_name: ${{ github.event.release.tag_name }}"
+          echo "release.prerelease: ${{ github.event.release.prerelease }}"
+          echo "release.draft: ${{ github.event.release.draft }}"
+          echo "release.html_url: ${{ github.event.release.html_url }}"
+          echo "release.body: ${{ github.event.release.body }}"
+          echo "release.name: ${{ github.event.release.name }}"
+          echo "release.author.login: ${{ github.event.release.author.login }}"
+          echo "release.created_at: ${{ github.event.release.created_at }}"
+          echo "release.published_at: ${{ github.event.release.published_at }}"
+          echo "Full event JSON:"
+          echo '${{ toJSON(github.event) }}'
       - name: Trigger Release Workflow
         run: echo "Trigger Release Workflow"
