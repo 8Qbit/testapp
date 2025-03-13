@@ -2,7 +2,7 @@ name: Trigger on Pre-release
 
 on:
   release:
-    types: [prereleased,edited]
+    types: [published,prereleased,edited]
 jobs:
   trigger-pre-release-workflow:
     runs-on: ubuntu-latest
