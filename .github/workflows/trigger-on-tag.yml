@@ -1,20 +1,48 @@
 name: Handle Tag Creation
 
 on:
-  push:
-    tags:
-      - '*'
-  
+  release:
+    types: [published]
+
 jobs:
-  trigger-remote-workflow:
+  trigger-pre-release-workflow:
     runs-on: ubuntu-latest
+    if: github.event.release.prerelease == true
     steps:
-      - name: Trigger Remote Workflow
-        uses: anecdotes-ai/remote-workflow-control@latest
-        with:
-          github-auth-token: ${{ secrets.PAT_TOKEN }}
-          workflow-org: 'Riskidev'
-          workflow-repo: 'Infra-v2'
-          workflow-yaml: 'build-app-on-tag-update.yml'
-          workflow-branch: 'infra-v2-dev'
-          workflow-inputs: '{\"tag_name\": \"${{ github.ref_name }}\"}'
+      - name: Trigger Pre-release Workflow
+        run: echo "Trigger Pre-release Workflow"
+
+  trigger-release-workflow:
+    runs-on: ubuntu-latest
+    if: github.event.release.prerelease == false
+    steps:
+      - name: Trigger Release Workflow
+        run: echo "Trigger Release Workflow"
+#jobs:
+#  trigger-pre-release-workflow:
+#    runs-on: ubuntu-latest
+#    if: github.event.release.prerelease == true
+#    steps:
+#      - name: Trigger Pre-release Workflow
+#        uses: anecdotes-ai/remote-workflow-control@latest
+#        with:
+#          github-auth-token: ${{ secrets.PAT_TOKEN }}
+#          workflow-org: 'Riskidev'
+#          workflow-repo: 'Infra-v2'
+#          workflow-yaml: 'build-app-on-pre-release.yml'
+#          workflow-branch: 'infra-v2-dev'
+#          workflow-inputs: '{\"tag_name\": \"${{ github.event.release.tag_name }}\"}'
+#
+#  trigger-release-workflow:
+#    runs-on: ubuntu-latest
+#    if: github.event.release.prerelease == false
+#    steps:
+#      - name: Trigger Release Workflow
+#        uses: anecdotes-ai/remote-workflow-control@latest
+#        with:
+#          github-auth-token: ${{ secrets.PAT_TOKEN }}
+#          workflow-org: 'Riskidev'
+#          workflow-repo: 'Infra-v2'
+#          workflow-yaml: 'build-app-on-release.yml'
+#          workflow-branch: 'infra-v2-dev'
+#          workflow-inputs: '{\"tag_name\": \"${{ github.event.release.tag_name }}\"}'
