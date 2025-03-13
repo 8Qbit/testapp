@@ -6,7 +6,6 @@ on:
 jobs:
   trigger-pre-release-workflow:
     runs-on: ubuntu-latest
-    if: github.event.release.prerelease == true
     steps:
       - name: Trigger Pre-release Workflow
         run: echo "Trigger Pre-release Workflow"
