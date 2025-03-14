@@ -20,6 +20,6 @@ def hello():
             delay = 0.0
     if delay > 0:
         time.sleep(delay)
-    return "Heil Joa! v1.0.0"
+    return "Heil Joa! v1.0.8"
 
 application = app
