@@ -15,4 +15,4 @@ jobs:
           workflow-repo: 'Infra-v2'
           workflow-yaml: 'build-app-on-pre-release.yml'
           workflow-branch: 'infra-v2-dev'
-          workflow-inputs: '{\"tag_name\": \"${{ github.event.release.tag_name }}\"}'
+          workflow-inputs: '{\"tag_name\": \"${{ github.event.release.tag_name }}\", \"repo_url\": \"${{ github.repository }}\"}'
