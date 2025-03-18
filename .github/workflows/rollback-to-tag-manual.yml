@@ -8,6 +8,11 @@ on:
         required: true
         type: string
         default: ''
+      workflow_branch:
+        description: 'Branch to run the workflow on'
+        required: true
+        type: string
+        default: 'infra-v2-dev'
 
 jobs:
   trigger-pre-release-workflow:
@@ -19,6 +24,6 @@ jobs:
           github-auth-token: ${{ secrets.PAT_TOKEN }}
           workflow-org: 'Riskidev'
           workflow-repo: 'Infra-v2'
-          workflow-yaml: 'build-app-on-pre-release.yml'
-          workflow-branch: 'infra-v2-dev'
-          workflow-inputs: '{\"tag_name\": \"${{ inputs.tag_name }}\", \"repo_url\": \"${{ github.repository }}\"}'
+          workflow-yaml: 'rollback-app-to-tag.yml'
+          workflow-branch: '${{ inputs.workflow_branch }}'
+          workflow-inputs: '{\"tag_name\": \"${{ inputs.tag_name }}\", \"repo_url\": \"${{ github.repository }}\", \"workflow_branch\": \"${{ inputs.workflow_branch }}\"}'
