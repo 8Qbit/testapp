@@ -16,3 +16,4 @@ jobs:
           workflow-yaml: 'build-thunderstore-ui-pre-release.yml'
           workflow-branch: 'infra-v2-dev'
           workflow-inputs: '{\"tag_name\": \"${{ github.event.release.tag_name }}\", \"repo_url\": \"${{ github.repository }}\"}'
+          wait-timeout-in-minutes: 15
