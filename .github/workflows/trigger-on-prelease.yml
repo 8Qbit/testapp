@@ -13,6 +13,6 @@ jobs:
           github-auth-token: ${{ secrets.PAT_TOKEN }}
           workflow-org: 'Riskidev'
           workflow-repo: 'Infra-v2'
-          workflow-yaml: 'build-app-on-pre-release.yml'
+          workflow-yaml: 'build-thunderstore-ui-pre-release.yml'
           workflow-branch: 'infra-v2-dev'
           workflow-inputs: '{\"tag_name\": \"${{ github.event.release.tag_name }}\", \"repo_url\": \"${{ github.repository }}\"}'
