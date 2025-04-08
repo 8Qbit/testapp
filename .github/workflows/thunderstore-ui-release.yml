@@ -1,4 +1,4 @@
-name: Thunderstore UI Release
+name: Thunderstore UI - Release
 
 on:
   release:
