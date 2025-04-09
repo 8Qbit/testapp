@@ -8,12 +8,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Pre-release Workflow
-        uses: anecdotes-ai/remote-workflow-control@latest
+        uses: BeewiseTechnologiesLTD/remote-workflow-trigger@v1
+        id: trigger-pre-release-workflow
         with:
-          github-auth-token: ${{ secrets.PAT_TOKEN }}
-          workflow-org: 'Riskidev'
-          workflow-repo: 'Infra-v2'
-          workflow-yaml: 'build-thunderstore-ui-pre-release.yml'
-          workflow-branch: 'infra-v2-qa'
-          workflow-inputs: '{\"tag_name\": \"${{ github.event.release.tag_name }}\", \"repo_url\": \"${{ github.repository }}\"}'
-          wait-timeout-in-minutes: 15
+          github_token: ${{ secrets.PAT_TOKEN }}
+          workflow_id: 'build-thunderstore-ui-pre-release.yml'
+          target_repo: 'Riskidev/Infra-v2'
+          ref: 'infra-v2-qa'
+          inputs: 'tag_name=${{ github.event.release.tag_name }},repo_url=${{ github.repository }}'
+          wait_interval: '5'
+          timeout: '900'
+      
+      - name: Outputs
+        run: |
+          echo "Workflow ID: ${{ steps.trigger-pre-release-workflow.outputs.run_id }}"
+          echo "Workflow URL: ${{ steps.trigger.outputs.workflow_url }}"
+          echo "Status: ${{ steps.trigger.outputs.status }}"
+          echo "Conclusion: ${{ steps.trigger.outputs.conclusion }}"
