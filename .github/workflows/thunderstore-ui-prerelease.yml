@@ -16,7 +16,7 @@ jobs:
           target_repo: 'Riskidev/Infra-v2'
           ref: 'infra-v2-qa'
           inputs: '{"tag_name": "${{ github.event.release.tag_name }}", "repo_url": "${{ github.repository }}"}'
-          wait_interval: '5'
+          wait_interval: '10'
           timeout: '900'
       
       - name: Outputs
