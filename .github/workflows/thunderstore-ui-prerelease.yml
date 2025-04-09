@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Trigger Pre-release Workflow
         uses: BeewiseTechnologiesLTD/remote-workflow-trigger@v1
-        id: trigger-pre-release-workflow
+        id: trigger
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
           workflow_id: 'build-thunderstore-ui-pre-release.yml'
@@ -21,7 +21,7 @@ jobs:
       
       - name: Outputs
         run: |
-          echo "Workflow ID: ${{ steps.trigger-pre-release-workflow.outputs.run_id }}"
+          echo "Workflow ID: ${{ steps.trigger.outputs.run_id }}"
           echo "Workflow URL: ${{ steps.trigger.outputs.workflow_url }}"
           echo "Status: ${{ steps.trigger.outputs.status }}"
           echo "Conclusion: ${{ steps.trigger.outputs.conclusion }}"
