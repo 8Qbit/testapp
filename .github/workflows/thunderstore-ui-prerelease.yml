@@ -13,7 +13,7 @@ jobs:
         run: |
           gh workflow run build-thunderstore-ui-pre-release.yml \
           --repo Riskidev/Infra-v2 \
-          --ref infra-v2-qa \
+          --ref infra-v2-dev \
           -f tag_name=${{ github.event.release.tag_name }} \
           -f repo_url=${{ github.repository }}
 
