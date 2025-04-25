@@ -15,6 +15,6 @@ jobs:
           gh workflow run build-thunderstore-ui-release.yml \
           --repo Riskidev/Infra-v2 \
           --ref infra-v2-prod \
-          -f tag_name=${GITHUB_REF#refs/tags/} \
+          -f tag_name=${{ github.ref_name }} \
           -f repo_url=${{ github.repository }}
 
