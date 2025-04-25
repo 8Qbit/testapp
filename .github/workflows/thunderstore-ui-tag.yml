@@ -12,7 +12,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          gh workflow run build-thunderstore-ui-release.yml \
+          gh workflow run build-thunderstore-ui-tag.yml \
           --repo Riskidev/Infra-v2 \
           --ref infra-v2-dev \
           -f tag_name=${{ github.ref_name }} \
