@@ -1,8 +1,9 @@
-name: Thunderstore UI - Tag
+name: Thunderstore UI - Push tag
 
 on:
-  release:
-    types: [released]
+  push:
+    tags:
+      - '*'
 jobs:
   trigger-release-workflow:
     runs-on: ubuntu-latest
@@ -14,6 +15,6 @@ jobs:
           gh workflow run build-thunderstore-ui-release.yml \
           --repo Riskidev/Infra-v2 \
           --ref infra-v2-prod \
-          -f tag_name=${{ github.event.release.tag_name }} \
+          -f tag_name=${GITHUB_REF#refs/tags/} \
           -f repo_url=${{ github.repository }}
 
