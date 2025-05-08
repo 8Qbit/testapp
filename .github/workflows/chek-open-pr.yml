@@ -23,19 +23,25 @@ jobs:
             });
             
             if (prs.length > 0) {
-              const prList = prs.map(pr => {
+              const getPRInfo = (pr) => {
                 const createdDate = new Date(pr.created_at);
                 const now = new Date();
                 const daysOld = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
-                const isOld = daysOld > process.env.PR_AGE_THRESHOLD_DAYS;
                 const ageText = daysOld === 0 ? 'created **today**' : `created **${daysOld}** days ago`;
-                return `- [${pr.title}](${pr.html_url}) by @${pr.user.login} (${ageText})${isOld ? ' 🔴' : ''}`;
-              }).join('\n');
+                return {
+                  daysOld,
+                  formattedText: `- [${pr.title}](${pr.html_url}) by @${pr.user.login} (${ageText})`
+                };
+              };
+
+              const prsWithInfo = prs.map(getPRInfo);
+              const oldPRs = prsWithInfo.filter(pr => pr.daysOld > process.env.PR_AGE_THRESHOLD_DAYS);
+              const recentPRs = prsWithInfo.filter(pr => pr.daysOld <= process.env.PR_AGE_THRESHOLD_DAYS);
               
               const message = {
                 embeds: [{
                   title: `🔍 Open Pull Requests in ${context.repo.owner}/${context.repo.repo}`,
-                  description: `Found **${prs.length}** open PR(s):\n\n${prList}`,
+                  description: `Found **${prs.length}** open PR(s):\n\n${oldPRs.length > 0 ? `**PRs older than ${process.env.PR_AGE_THRESHOLD_DAYS} days** 🔴\n${oldPRs.map(pr => pr.formattedText).join('\n')}\n\n` : ''}${recentPRs.length > 0 ? `**Recent PRs**\n${recentPRs.map(pr => pr.formattedText).join('\n')}` : ''}`,
                   color: 0x3498db,
                   timestamp: new Date().toISOString()
                 }]
