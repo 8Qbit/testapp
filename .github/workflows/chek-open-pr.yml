@@ -19,15 +19,9 @@ jobs:
             // Helper function to calculate PR age and format its display text
             function getPRInfo(pr) {
               const createdDate = new Date(pr.created_at);
-              const formattedDate = createdDate.toLocaleDateString('fi-FI', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-              });
-              
               return {
                 daysOld: Math.floor((new Date() - createdDate) / (1000 * 60 * 60 * 24)),
-                formattedText: `- [${pr.title}](${pr.html_url}) by @${pr.user.login} (created ${formattedDate})`
+                formattedText: `- [${pr.title}](${pr.html_url}) by @${pr.user.login}`
               };
             }
 
