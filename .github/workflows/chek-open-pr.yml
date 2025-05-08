@@ -1,0 +1,43 @@
+name: PR Notification to Discord
+
+on:
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  check-prs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for open PRs
+        id: check-prs
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open'
+            });
+            
+            if (prs.length > 0) {
+              const prList = prs.map(pr => 
+                `- [${pr.title}](${pr.html_url}) by @${pr.user.login}`
+              ).join('\n');
+              
+              const message = {
+                embeds: [{
+                  title: '🔍 Open Pull Requests',
+                  description: `Found ${prs.length} open PR(s):\n\n${prList}`,
+                  color: 0x3498db,
+                  timestamp: new Date().toISOString()
+                }]
+              };
+              
+              await fetch('${{ secrets.DISCORD_WEBHOOK_URL }}', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(message)
+              });
+            } 
