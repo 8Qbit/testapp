@@ -3,6 +3,9 @@ name: PR Notification to Discord
 on:
   workflow_dispatch: # Allow manual triggering
 
+env:
+  PR_AGE_THRESHOLD_DAYS: 7
+
 jobs:
   check-prs:
     runs-on: ubuntu-latest
@@ -20,10 +23,14 @@ jobs:
             });
             
             if (prs.length > 0) {
-              const prList = `| PR Title | Author |\n|----------|---------|\n` + 
-                prs.map(pr => 
-                  `| [${pr.title}](${pr.html_url}) | @${pr.user.login} |`
-                ).join('\n');
+              const prList = prs.map(pr => {
+                const createdDate = new Date(pr.created_at);
+                const now = new Date();
+                const daysOld = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
+                const isOld = daysOld > process.env.PR_AGE_THRESHOLD_DAYS;
+                const ageText = daysOld === 0 ? 'created **today**' : `created **${daysOld}** days ago`;
+                return `- [${pr.title}](${pr.html_url}) by @${pr.user.login} (${ageText})${isOld ? ' 🔴' : ''}`;
+              }).join('\n');
               
               const message = {
                 embeds: [{
