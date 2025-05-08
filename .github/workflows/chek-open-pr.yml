@@ -4,7 +4,7 @@ on:
   workflow_dispatch: # Allow manual triggering
 
 env:
-  PR_AGE_THRESHOLD_DAYS: 7
+  PR_AGE_THRESHOLD_DAYS: 1
 
 jobs:
   check-prs:
@@ -19,13 +19,17 @@ jobs:
             // Helper function to calculate PR age and format its display text
             function getPRInfo(pr) {
               const createdDate = new Date(pr.created_at);
-              const now = new Date();
-              const daysOld = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
-              const ageText = daysOld === 0 ? 'created **today**' : `created **${daysOld}** days ago`;
+              const formattedDate = createdDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              });
               
               return {
-                daysOld,
-                formattedText: `- [${pr.title}](${pr.html_url}) by @${pr.user.login} (${ageText})`
+                daysOld: Math.floor((new Date() - createdDate) / (1000 * 60 * 60 * 24)),
+                formattedText: `- [${pr.title}](${pr.html_url}) by @${pr.user.login} (created **${formattedDate}**)`
               };
             }
 
