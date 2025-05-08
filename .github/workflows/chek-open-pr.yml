@@ -26,7 +26,7 @@ jobs:
               
               const message = {
                 embeds: [{
-                  title: '🔍 Open Pull Requests in ${context.repo.owner}/${context.repo.repo}',
+                  title: `🔍 Open Pull Requests in ${context.repo.owner}/${context.repo.repo}`,
                   description: `Found ${prs.length} open PR(s):\n\n${prList}`,
                   color: 0x3498db,
                   timestamp: new Date().toISOString()
