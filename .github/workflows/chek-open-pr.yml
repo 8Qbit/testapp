@@ -54,7 +54,8 @@ jobs:
               // Build and send message
               const message = {
                 embeds: [{
-                  title: `🔍 Open Pull Requests in [${context.repo.owner}/${context.repo.repo}](https://github.com/${context.repo.owner}/${context.repo.repo})`,
+                  title: `🔍 Open Pull Requests in ${context.repo.owner}/${context.repo.repo}`,
+                  url: `https://github.com/${context.repo.owner}/${context.repo.repo}`,
                   description: buildMessageDescription(prs, oldPRs, recentPRs),
                   color: 0x3498db,
                   timestamp: new Date().toISOString()
